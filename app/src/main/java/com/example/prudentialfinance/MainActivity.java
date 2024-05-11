@@ -34,11 +34,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("Phuc3");
-        System.out.println("Phuc2");
-        System.out.println("phuc1");
-        System.out.println("phuc4BR");
-        System.out.println("F12");
-        System.out.println("F22");
+        System.out.println("Phuc2AAAa");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
