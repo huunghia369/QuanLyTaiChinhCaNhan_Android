@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Phuc3");
         System.out.println("Phuc2");
         System.out.println("phuc1");
+        System.out.println("phuc4");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
