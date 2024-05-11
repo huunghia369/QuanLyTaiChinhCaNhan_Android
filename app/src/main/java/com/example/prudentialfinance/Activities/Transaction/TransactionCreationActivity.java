@@ -284,7 +284,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
                 if (amountValue > categoryBalance) {
                     // Số tiền chi tiêu lớn hơn số dư của categoryBalance
                     // Hiển thị thông báo
-                    System.out.println("ammountf1 = " + amountValue + "   balance = " + categoryBalance);
+                    System.out.println("ammountf = " + amountValue + "   balance = " + categoryBalance);
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle("Thông báo");
                     builder.setMessage("Số tiền chi tiêu lớn hơn số dư của lọ " + category_name);
