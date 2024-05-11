@@ -1,6 +1,7 @@
 package com.example.prudentialfinance.RecycleViewAdapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,12 +9,15 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
@@ -21,13 +25,21 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prudentialfinance.Activities.General.AddGoalActivity;
+import com.example.prudentialfinance.Activities.General.GoalActivity;
 import com.example.prudentialfinance.Helpers.Helper;
+import com.example.prudentialfinance.Helpers.Notification;
+import com.example.prudentialfinance.HomeActivity;
+import com.example.prudentialfinance.MainActivity;
 import com.example.prudentialfinance.Model.Goal;
 import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.Activities.General.DepositActivity;
 import com.example.prudentialfinance.Activities.General.GoalDetailActivity;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class GoalRecycleViewAdapter extends RecyclerView.Adapter<GoalRecycleViewAdapter.ViewHolder> {
@@ -66,12 +78,17 @@ public class GoalRecycleViewAdapter extends RecyclerView.Adapter<GoalRecycleView
         {
             holder.progressBar.setProgress(1);
         }else
-        holder.progressBar.setProgress((int)progress);
+            holder.progressBar.setProgress((int)progress);
 
+        // Kiểm tra số ngày còn lại cho goal_deadline
+        int daysUntilDeadline = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            daysUntilDeadline = getDaysUntilDeadline(entry.getDeadline());
+        }
 //        SET CONTROL
         if(entry.getStatus()==1)
         {
-            holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
+            holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.YELLOW));
         }else if(entry.getStatus()==2)
         {
             holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#03DAC5")));
@@ -82,11 +99,22 @@ public class GoalRecycleViewAdapter extends RecyclerView.Adapter<GoalRecycleView
 
         holder.goal_name.setText(Helper.truncate_string(entry.getName(),25, "...", true));
         holder.goal_deadline.setText(Helper.truncate_string(entry.getDeadline(), 25, "...", true));
-        holder.goal_amount.setText(Helper.truncate_string(Helper.formatNumber((int)entry.getAmount())+ appInfo.getCurrency(), 25, "...", true));
+        holder.goal_amount.setText(Helper.truncate_string(Helper.formatNumber((int)entry.getAmount())+ "đ", 25, "...", true));
         if(progress>=100)
             holder.goal_balance.setText(context.getString(R.string.done));
         else
-        holder.goal_balance.setText(Helper.truncate_string(context.getString(R.string.had_money)+'\t'+Helper.formatNumber((int)(entry.getDeposit()+entry.getBalance()))+appInfo.getCurrency(), 70, "...", true));
+            holder.goal_balance.setText(Helper.truncate_string(context.getString(R.string.had_money)+'\t'+Helper.formatNumber((int)(entry.getDeposit()+entry.getBalance()))+"đ", 70, "...", true));
+
+
+        // Tạo thông báo nếu số ngày còn lại ít hơn hoặc bằng 7
+        if (daysUntilDeadline <= 7 && daysUntilDeadline >= 0  && entry.getStatus()==1) {
+//            Toast toast = FancyToast.makeText(context, "Goal sắp hết hạn: " + entry.getName() + "\nNgày hết hạn: " + entry.getDeadline(), FancyToast.LENGTH_LONG, FancyToast.INFO, R.drawable.goal, true);
+//            toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+//            toast.show();
+            Log.d("Deadline", "Goal sắp hết hạn:" + entry.getName() + ". " + "Ngày hết hạn:" + entry.getDeadline());
+            Notification notification = new Notification();
+            notification.showNotification((Activity) context,"Goal sắp hết hạn: " + entry.getName(), "Ngày hết hạn: " + entry.getDeadline() );
+        }
 
         AlertDialog.Builder b = new AlertDialog.Builder(context);
         b.setTitle(context.getString(R.string.action));
@@ -120,6 +148,22 @@ public class GoalRecycleViewAdapter extends RecyclerView.Adapter<GoalRecycleView
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private int getDaysUntilDeadline(String deadline) {
+        if (deadline == null) {
+            return -1; // Trả về giá trị âm nếu deadline không hợp lệ
+        }
+
+        try {
+            LocalDate currentDate = LocalDate.now();
+            LocalDate goalDeadline = LocalDate.parse(deadline);
+            return (int) ChronoUnit.DAYS.between(currentDate, goalDeadline);
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+            return -1; // Trả về giá trị âm nếu deadline không hợp lệ
+        }
+    }
+
     @Override
     public int getItemCount() {
         return objects.size();
@@ -148,3 +192,4 @@ public class GoalRecycleViewAdapter extends RecyclerView.Adapter<GoalRecycleView
         }
     }
 }
+
