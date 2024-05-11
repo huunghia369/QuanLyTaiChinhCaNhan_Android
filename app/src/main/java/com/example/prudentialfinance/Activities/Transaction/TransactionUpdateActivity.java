@@ -1,6 +1,7 @@
 package com.example.prudentialfinance.Activities.Transaction;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +19,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.prudentialfinance.Activities.Transaction.TransactionCreationActivity;
 import com.example.prudentialfinance.Adapter.AccountAdapter;
+import com.example.prudentialfinance.Adapter.CategoryListViewAdapter;
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.Helper;
@@ -28,6 +31,7 @@ import com.example.prudentialfinance.Model.Category;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.Accounts.AccountViewModel;
+import com.example.prudentialfinance.ViewModel.Categories.AddCategoryViewModel;
 import com.example.prudentialfinance.ViewModel.CategoryViewModel;
 import com.example.prudentialfinance.ViewModel.HomeFragmentViewModel;
 import com.example.prudentialfinance.ViewModel.TransactionViewModel;
@@ -40,6 +44,27 @@ import java.util.Map;
 
 public class TransactionUpdateActivity extends AppCompatActivity {
 
+
+    // sua o day
+    private  int amount_tmp;
+    private  Category category_tmp;
+    private static Integer categoryBalance;
+    private String category_name;
+    public static Integer category_balance_result;
+    public static Integer getCategory_balance_result() {
+        return category_balance_result;
+    }
+    AddCategoryViewModel addCategoryViewModel;
+    public TransactionUpdateActivity(){};
+    public static String categoryId;
+    public static String getCategoryId() {
+        return categoryId;
+    }
+    public static Integer category_balance_result_income;
+    public static Integer getCategory_balance_result_income() {
+        return category_balance_result_income;
+    }
+    // ket thuc sua o day **
     private TransactionDetail transaction;
     private Account atm;
     private LoadingDialog loadingDialog;
@@ -61,7 +86,7 @@ public class TransactionUpdateActivity extends AppCompatActivity {
     private TransactionViewModel transactionViewModel;
 
     private int id;
-    private String categoryId;
+    //    private String categoryId;
     private String categoryName;
     private String accountId;
     private String accountName;
@@ -78,6 +103,8 @@ public class TransactionUpdateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_update);
+//        amount_tmp = Integer.parseInt(transactionAmount.getText().toString());
+//        System.out.println("TranSactionUpdate 106 "+ amount_tmp);
 
         /*this command belows prevent keyboard from popping up automatically*/
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -110,6 +137,7 @@ public class TransactionUpdateActivity extends AppCompatActivity {
 
         /*Step 4*/
         transactionUpdate.observe(this, integer -> {
+            System.out.println("139 "+ integer);
             if( integer > 0)
             {
                 alert.showAlert("Thành công", "Thao tác đã được thực hiện thành công", R.drawable.ic_check);
@@ -211,17 +239,44 @@ public class TransactionUpdateActivity extends AppCompatActivity {
             type = transaction.getType().toString();
             description = transactionDescription.getText().toString();
 
+            // sua o day
+            int amountValue = Integer.parseInt(amount);
+            if (type.equals("2")) {
+                if (amountValue > categoryBalance) {
+                    // Số tiền chi tiêu lớn hơn số dư của categoryBalance
+                    // Hiển thị thông báo
+                    System.out.println("ammountf1 = " + amountValue + "   balance = " + categoryBalance);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Thông báo");
+                    builder.setMessage("Số tiền chi tiêu lớn hơn số dư của lọ " + category_name);
+                    builder.setPositiveButton("OK", null);
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
 
-            transactionViewModel.updateTransaction(headers,
-                    id,
-                    categoryId,
-                    accountId,
-                    name,
-                    amount,
-                    reference,
-                    date,
-                    type,
-                    description);
+                    // Yêu cầu trỏ vào ô amount
+                    transactionAmount.requestFocus();
+                } else {
+                    category_balance_result = categoryBalance - amountValue;
+                    System.out.println("259 balance sau khi tru   " + category_balance_result);
+                    transactionViewModel.updateTransaction(headers,id,
+                            categoryId,
+                            accountId,
+                            name,
+                            amount,
+                            reference,
+                            date,
+                            type,
+                            description
+                    );
+                }
+                addCategoryViewModel = new AddCategoryViewModel();
+                addCategoryViewModel.updateData2(headers, category_tmp);
+            }
+
+
+            // ket thuc sua
+
+
 
 
         });
@@ -288,16 +343,21 @@ public class TransactionUpdateActivity extends AppCompatActivity {
             }
         }
 
-        SpinnerAdapter categoryAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, categoriesName);
+        SpinnerAdapter categoryAdapter = new CategoryListViewAdapter(this,categories);
         categorySpinner.setAdapter(categoryAdapter);
         categorySpinner.setSelection(position);
+        amount_tmp = Integer.parseInt(transactionAmount.getText().toString());
+        System.out.println("TranSactionUpdate 106 "+ amount_tmp);
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 /*get category id which is selected from category spinner*/
+                category_tmp = categories.get(i);
+                /*get category id which is selected from category spinner*/
                 categoryId = categories.get(i).getId().toString();
-                categoryName = categories.get(i).getName();
+                categoryBalance = categories.get(i).getBalance()+ amount_tmp;
+                category_name = categories.get(i).getName();
             }
 
             @Override

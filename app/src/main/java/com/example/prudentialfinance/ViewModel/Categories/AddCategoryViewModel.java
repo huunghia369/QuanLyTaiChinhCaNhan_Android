@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Activities.Transaction.TransactionCreationActivity;
+import com.example.prudentialfinance.Activities.Transaction.TransactionUpdateActivity;
 import com.example.prudentialfinance.Container.CategoryAdd;
 import com.example.prudentialfinance.Model.Category;
 
@@ -75,7 +76,9 @@ public class AddCategoryViewModel extends ViewModel {
         });
     }
 
-    public void updateData(Map<String, String> headers, Category data){
+
+    // Tạo mới giao dịch chi tiêu
+    public void updateData1(Map<String, String> headers, Category data){
         TransactionCreationActivity transactionCreationActivity = new TransactionCreationActivity();
         isLoading.setValue(true);
         this.service = HTTPService.getInstance();
@@ -111,6 +114,43 @@ public class AddCategoryViewModel extends ViewModel {
         });
     }
 
+    // sua o day
+    public void updateData2(Map<String, String> headers, Category data){
+        TransactionUpdateActivity transactionUpdateActivity = new TransactionUpdateActivity();
+        isLoading.setValue(true);
+        this.service = HTTPService.getInstance();
+        HTTPRequest api = service.create(HTTPRequest.class);
+        System.out.println("121 ...... Id = "+transactionUpdateActivity.getCategoryId()+"   balance = "+transactionUpdateActivity.getCategory_balance_result());
+        Call<CategoryAdd> container;
+        if(data.getType() == 1){
+//            container = api.editIncomeCategory(headers, data.getId(), data.getName(), data.getDescription(), data.getColor());
+            container = api.editIncomeCategory(headers,Integer.parseInt(transactionUpdateActivity.getCategoryId()), data.getName(), data.getDescription(), data.getColor(),transactionUpdateActivity.getCategory_balance_result_income() );
+        }else{
+            System.out.println("127 OKOK");
+            container = api.editExpenseCategory(headers,Integer.parseInt(transactionUpdateActivity.getCategoryId()), data.getName(), data.getDescription(), data.getColor(),transactionUpdateActivity.getCategory_balance_result() );
+        }
+        container.enqueue(new Callback<CategoryAdd>() {
+            @Override
+            public void onResponse(@NonNull Call<CategoryAdd> call, @NonNull Response<CategoryAdd> response) {
+                isLoading.setValue(false);
+                if (response.isSuccessful()) {
+                    System.out.println("101 okok");
+                    CategoryAdd resource = response.body();
+                    assert resource != null;
+                    object.setValue(resource);
+                    return;
+                }
+                object.setValue(null);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CategoryAdd> call, @NonNull Throwable t) {
+                isLoading.setValue(false);
+                object.setValue(null);
+            }
+        });
+    }
+    // ket thuc sua
     public void updateDataIncome(Map<String, String> headers, Category data){
         TransactionCreationActivity transactionCreationActivity = new TransactionCreationActivity();
         isLoading.setValue(true);

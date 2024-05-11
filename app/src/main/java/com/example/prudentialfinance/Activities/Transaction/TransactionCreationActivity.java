@@ -65,7 +65,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
         return category_balance_result_income;
     }
     // Trieu_changed
-    private Integer categoryBalance;
+    private static Integer categoryBalance;
     private String category_name;
     public static String categoryId;
     AddCategoryViewModel addCategoryViewModel;
@@ -93,7 +93,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
     // Chia % thu nhập
     private CategoriesExpenseViewModel categoriesExpenseViewModel = null;
 
-//    private String categoryId;
+    //    private String categoryId;
 //    private Integer categoryBalance;
     private String accountId;
     private String name;
@@ -274,7 +274,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
             reference = transactionReference.getText().toString();
             String input = transactionDate.getText().toString();
             date = Helper.convertStringToValidDate( input);
-            System.out.println("ammount2 = ");
+
             description = transactionDescription.getText().toString();
             int amountValue = Integer.parseInt(amount);
 
@@ -284,7 +284,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
                 if (amountValue > categoryBalance) {
                     // Số tiền chi tiêu lớn hơn số dư của categoryBalance
                     // Hiển thị thông báo
-                    System.out.println("ammountf = " + amountValue + "   balance = " + categoryBalance);
+                    System.out.println("ammountf1 = " + amountValue + "   balance = " + categoryBalance);
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle("Thông báo");
                     builder.setMessage("Số tiền chi tiêu lớn hơn số dư của lọ " + category_name);
@@ -296,7 +296,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
                     transactionAmount.requestFocus();
                 } else {
                     category_balance_result = categoryBalance - amountValue;
-                    System.out.println("296" + category_balance_result);
+                    System.out.println("296 balance sau khi tru" + category_balance_result);
                     transactionViewModel.createTransaction(headers,
                             categoryId,
                             accountId,
@@ -309,7 +309,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
                     );
                 }
                 addCategoryViewModel = new AddCategoryViewModel();
-                addCategoryViewModel.updateData(headers, category_tmp);
+                addCategoryViewModel.updateData1(headers, category_tmp);
             } else if (type.equals("1")) {
                 if (amountValue == 0) {
                     // Số tiền thu nhập bằng 0

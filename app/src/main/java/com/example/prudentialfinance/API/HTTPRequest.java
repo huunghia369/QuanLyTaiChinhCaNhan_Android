@@ -315,7 +315,7 @@ public interface HTTPRequest {
                                          @Field("name") String name,
                                          @Field("description") String description,
                                          @Field("color") String color,
-                                        @Field("category_balance_result_income") Integer category_balance_result_income);
+                                         @Field("category_balance_result_income") Integer category_balance_result_income);
 
 
 

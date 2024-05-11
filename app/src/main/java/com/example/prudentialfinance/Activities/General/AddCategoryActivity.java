@@ -122,8 +122,8 @@ public class AddCategoryActivity extends AppCompatActivity {
 
             if(category.getId() == 0){
                 viewModel.saveData(headers, category);
-            }else{
-                viewModel.updateData(headers, category);
+            }else {
+                viewModel.updateData2(headers, category);
             }
         });
 
