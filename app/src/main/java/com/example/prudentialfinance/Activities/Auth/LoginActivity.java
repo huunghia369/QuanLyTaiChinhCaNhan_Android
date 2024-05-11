@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // cai dat cac ket noi
-    // test lan 2
+    // test lan 22
     private void setComponent() {
         loadingDialog = new LoadingDialog(this);
         alert = new Alert(this, 1);
