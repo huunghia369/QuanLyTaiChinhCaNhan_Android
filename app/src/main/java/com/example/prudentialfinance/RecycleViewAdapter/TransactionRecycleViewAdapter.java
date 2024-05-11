@@ -89,6 +89,8 @@ public class TransactionRecycleViewAdapter extends RecyclerView.Adapter<Transact
         if(transactionType == 2)
         {
             holder.amount.setTextColor(context.getColor(R.color.colorRed));
+        }else {
+            holder.amount.setTextColor(context.getColor(R.color.colorGreen));
         }
         holder.date.setText(transactionDate);
 
