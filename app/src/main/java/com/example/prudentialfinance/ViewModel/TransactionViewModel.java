@@ -150,8 +150,7 @@ public class TransactionViewModel extends ViewModel {
         });
     }
 
-    public void updateTransaction(Map<String ,String> headers,
-                                  int id,
+    public void updateTransaction(Map<String ,String> headers,int id,
                                   String categoryId,
                                   String accountId,
                                   String name,
@@ -161,6 +160,7 @@ public class TransactionViewModel extends ViewModel {
                                   String type,
                                   String description)
     {
+        System.out.println("163 amount sau khi update "+ amount);
         animation.setValue(true);
         /*Step 1*/
         Retrofit service = HTTPService.getInstance();
@@ -168,7 +168,7 @@ public class TransactionViewModel extends ViewModel {
 
 
         /*Step 2*/
-        Call<TransactionUpdate> container = api.transactionUpdate(headers, id,
+        Call<TransactionUpdate> container = api.transactionUpdate(headers,id,
                 categoryId,
                 accountId,
                 name,
@@ -185,8 +185,10 @@ public class TransactionViewModel extends ViewModel {
             public void onResponse(@NonNull Call<TransactionUpdate> call,
                                    @NonNull Response<TransactionUpdate> response) {
                 animation.setValue(false);
+                System.out.println("188 "+ animation.getValue());
                 if(response.isSuccessful())
                 {
+                    System.out.println("190 update thanh cong");
                     TransactionUpdate resource = response.body();
 
                     assert resource != null;
@@ -194,7 +196,8 @@ public class TransactionViewModel extends ViewModel {
                     String msg = resource.getMsg();
                     transactionMessage.setValue(msg);
                     transactionUpdate.setValue(result);
-                }
+                }else System.out.println("198 update that bai");
+
             }
 
             @Override
