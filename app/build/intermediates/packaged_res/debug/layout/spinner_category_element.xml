@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/elementSettingLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+
+    <TextView
+        android:id="@+id/categoryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="18dp"
+
+        android:text="@string/task_destroyer"
+        android:textColor="@color/colorNormalText"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/categoryBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/categoryTitle"
+        android:layout_toEndOf="@id/categoryTitle"
+        android:layout_marginStart="17dp"
+        android:text="@string/money_value"
+        android:textColor="@color/colorTheme"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20sp"
+        android:layout_below="@+id/categoryBalance" />
+
+</RelativeLayout>
