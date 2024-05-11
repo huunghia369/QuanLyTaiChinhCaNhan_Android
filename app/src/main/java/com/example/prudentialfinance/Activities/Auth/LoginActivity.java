@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    // login
+    // cai dat cac ket noi
     private void setComponent() {
         loadingDialog = new LoadingDialog(this);
         alert = new Alert(this, 1);
