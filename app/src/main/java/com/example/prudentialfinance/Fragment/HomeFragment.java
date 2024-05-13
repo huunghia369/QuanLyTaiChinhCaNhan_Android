@@ -258,7 +258,7 @@ public class HomeFragment extends Fragment {
         /*Step 2*/
         viewModel.getTotalBalance().observe((LifecycleOwner) context, aDouble -> {
             String value = Helper.formatNumber(aDouble);
-            remaining.setText( value + " " + appInfo.getCurrency() );
+            remaining.setText( value + " " + "đ" );
         });
 
         alert = new Alert(getContext(), 1);

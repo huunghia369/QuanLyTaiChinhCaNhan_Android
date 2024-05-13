@@ -86,7 +86,7 @@ public class SiteSettingsActivity extends AppCompatActivity {
         logoMark.setText(data.getLogomark());
         logoType.setText(data.getLogotype());
 
-        currencyField.setText(data.getCurrency());
+        currencyField.setText("đ");
 
         int index = 0;
         for(Map.Entry<String, String> entry : listLanguage.entrySet()) {
@@ -112,7 +112,7 @@ public class SiteSettingsActivity extends AppCompatActivity {
             String logo_mark = logoMark.getText().toString().trim();
             String logo_type = logoType.getText().toString().trim();
 
-            String currency = currencyField.getText().toString().trim();
+            String currency = "đ";
             String language = shortLang.trim();
             String action = "save";
 
