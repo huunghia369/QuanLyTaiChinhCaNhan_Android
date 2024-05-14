@@ -76,6 +76,39 @@ public class AddCategoryViewModel extends ViewModel {
         });
     }
 
+    public void updateData(Map<String, String> headers, Category data){
+        TransactionCreationActivity transactionCreationActivity = new TransactionCreationActivity();
+        isLoading.setValue(true);
+        this.service = HTTPService.getInstance();
+        HTTPRequest api = service.create(HTTPRequest.class);
+
+        Call<CategoryAdd> container;
+        if(data.getType() == 1){
+            container = api.editIncomeCategory(headers, data.getId(), data.getName(), data.getDescription(), data.getColor(),transactionCreationActivity.getCategory_balance_result_income());
+        }else{
+            container = api.editExpenseCategory(headers, data.getId(), data.getName(), data.getDescription(), data.getColor(),transactionCreationActivity.getCategory_balance_result());
+        }
+        container.enqueue(new Callback<CategoryAdd>() {
+            @Override
+            public void onResponse(@NonNull Call<CategoryAdd> call, @NonNull Response<CategoryAdd> response) {
+                isLoading.setValue(false);
+                if (response.isSuccessful()) {
+                    CategoryAdd resource = response.body();
+                    assert resource != null;
+                    object.setValue(resource);
+                    return;
+                }
+                object.setValue(null);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CategoryAdd> call, @NonNull Throwable t) {
+                isLoading.setValue(false);
+                object.setValue(null);
+            }
+        });
+    }
+
 
     // Tạo mới giao dịch chi tiêu
     public void updateData1(Map<String, String> headers, Category data){
