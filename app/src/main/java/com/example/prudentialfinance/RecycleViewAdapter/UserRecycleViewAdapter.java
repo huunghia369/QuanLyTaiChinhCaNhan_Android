@@ -50,7 +50,7 @@ public class UserRecycleViewAdapter extends RecyclerView.Adapter<UserRecycleView
     @Override
     public void onBindViewHolder(@NonNull UserRecycleViewAdapter.ViewHolder holder, int position) {
             User entry = objects.get(position);
-
+        if (entry==null) return;
             holder.user_name.setText(entry.getFirstname() + " " + entry.getLastname());
             holder.user_email.setText(entry.getEmail());
             if(entry.getIs_active()){
