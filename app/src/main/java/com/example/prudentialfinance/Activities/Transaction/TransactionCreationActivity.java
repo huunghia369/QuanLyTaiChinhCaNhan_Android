@@ -213,6 +213,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
         loadingDialog = new LoadingDialog(TransactionCreationActivity.this);
 
         accountSpinner = findViewById(R.id.transactionCreationAccountSpinner);
+        accountSpinner.setEnabled(false);
         categorySpinner = findViewById(R.id.transactionCreationCategorySpinner);
 
         transactionName = findViewById(R.id.transactionCreationName);

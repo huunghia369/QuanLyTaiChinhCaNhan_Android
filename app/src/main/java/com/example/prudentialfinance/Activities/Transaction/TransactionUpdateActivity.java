@@ -170,7 +170,9 @@ public class TransactionUpdateActivity extends AppCompatActivity {
 
         transactionDate = findViewById(R.id.transactionUpdateDate);
         accountSpinner = findViewById(R.id.transactionUpdateAccountSpinner);
+        accountSpinner.setEnabled(false);
         categorySpinner = findViewById(R.id.transactionUpdateCategorySpinner);
+        categorySpinner.setEnabled(false);
 
         buttonGoBack = findViewById(R.id.transactionUpdateButtonGoBack);
         buttonSave = findViewById(R.id.transactionUpdateButtonSave);
