@@ -76,8 +76,8 @@ public class AddGoalActivity extends AppCompatActivity {
 
     private void setCurrency()
     {
-        tv_currency_balance.setText(global.getAppInfo().getCurrency());
-        tv_currency_amount.setText(global.getAppInfo().getCurrency());
+        tv_currency_balance.setText("đ");
+        tv_currency_amount.setText("đ");
     }
 
     private void setComponent() {

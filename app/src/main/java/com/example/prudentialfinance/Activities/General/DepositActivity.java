@@ -85,7 +85,7 @@ public class DepositActivity extends AppCompatActivity {
                 if(money+deposit>goal.getAmount()) {
                     alert.showAlert(getString(R.string.alertTitle), global.getString(R.string.error_deposit_max)+
                                                                      Helper.formatNumber((int)(goal.getAmount()-money))+
-                                                                        global.getAppInfo().getCurrency(), R.drawable.ic_close);
+                                                                        "đ", R.drawable.ic_close);
                 }
                 else
                 viewModel.deposit(headers,goal.getId(),deposit);
