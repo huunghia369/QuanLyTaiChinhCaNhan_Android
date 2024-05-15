@@ -52,6 +52,8 @@ public class  CardCreationActivity extends AppCompatActivity {
         buttonCreate = findViewById(R.id.cardCreationButtonCreate);
         cardNumber = findViewById(R.id.cardCreationCardNumber);
         cardBalance = findViewById(R.id.cardCreationCardBalance);
+        cardBalance.setText("0.00");
+        cardBalance.setEnabled(false);
         cardDescription = findViewById(R.id.cardCreationCardDescription);
         cardBank = findViewById(R.id.cardCreationCardBank);
     }
@@ -79,6 +81,7 @@ public class  CardCreationActivity extends AppCompatActivity {
 
         buttonCreate.setOnClickListener(view->{
             String number = cardNumber.getText().toString();
+            //String balance =  cardBalance.getText().toString();
             String balance =  cardBalance.getText().toString();
             String bank = cardBank.getText().toString();
             String description = cardDescription.getText().toString();
