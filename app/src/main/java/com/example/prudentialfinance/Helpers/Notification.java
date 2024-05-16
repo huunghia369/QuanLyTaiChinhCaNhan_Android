@@ -60,7 +60,7 @@ public class Notification {
 
         /*Step 3*/
          PendingIntent pendingIntent =
-                 PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+                 PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_MUTABLE);
         builder.setContentIntent(pendingIntent);
 
          /*Step 4*/

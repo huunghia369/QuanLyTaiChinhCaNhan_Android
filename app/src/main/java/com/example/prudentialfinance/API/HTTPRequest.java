@@ -284,11 +284,12 @@ public interface HTTPRequest {
                                                 @Query("order[column]") String column,
                                                 @Query("order[dir]") String dir);
 
+
     @GET("incomecategories")
-    Call<CategoryGetAll> retrieveInflowCategories(@HeaderMap Map<String, String> headers, @QueryMap Map<String, String> parameters);
+    Call<CategoryGetAll> retrieveInflowCategories(@HeaderMap Map<String, String> headers, @QueryMap Map<String, String> parameters,@Query("account_Id") String account_Id);
 
     @GET("expensecategories")
-    Call<CategoryGetAll> retrieveOutflowCategories(@HeaderMap Map<String, String> headers, @QueryMap Map<String, String> parameters);
+    Call<CategoryGetAll> retrieveOutflowCategories(@HeaderMap Map<String, String> headers, @QueryMap Map<String, String> parameters,@Query("account_Id") String account_Id);
 
     @DELETE("incomecategories/{id}")
     Call<CategoryAdd> removeIncomeCategories(@HeaderMap Map<String, String> headers, @Path("id") int id);
@@ -315,7 +316,8 @@ public interface HTTPRequest {
                                          @Field("name") String name,
                                          @Field("description") String description,
                                          @Field("color") String color,
-                                         @Field("category_balance_result_income") Integer category_balance_result_income);
+                                         @Field("category_balance_result_income") Integer category_balance_result_income,
+                                         @Field("account_Id") String account_Id);
 
 
 
@@ -345,7 +347,8 @@ public interface HTTPRequest {
                                           @Field("name") String name,
                                           @Field("description") String description,
                                           @Field("color") String color,
-                                          @Field("category_balance_result") Integer category_balance_result);
+                                          @Field("category_balance_result") Integer category_balance_result,
+                                          @Field("account_Id") String account_Id);
 
 
     @GET("home/incomevsexpense")

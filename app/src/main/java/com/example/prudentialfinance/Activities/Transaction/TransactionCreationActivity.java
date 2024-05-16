@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -70,7 +71,9 @@ public class TransactionCreationActivity extends AppCompatActivity{
     public static String categoryId;
     AddCategoryViewModel addCategoryViewModel;
     private  Category category_tmp;
-
+    public static String getAccountId() {
+        return accountId;
+    }
 
     //**
     private AccountViewModel viewModel;
@@ -95,7 +98,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
 
     //    private String categoryId;
 //    private Integer categoryBalance;
-    private String accountId;
+    private static String accountId;
     private String name;
     private String amount;
     private String reference;
@@ -213,7 +216,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
         loadingDialog = new LoadingDialog(TransactionCreationActivity.this);
 
         accountSpinner = findViewById(R.id.transactionCreationAccountSpinner);
-        accountSpinner.setEnabled(false);
+
         categorySpinner = findViewById(R.id.transactionCreationCategorySpinner);
 
         transactionName = findViewById(R.id.transactionCreationName);
@@ -353,10 +356,47 @@ public class TransactionCreationActivity extends AppCompatActivity{
         alert.btnOK.setOnClickListener(view->finish());
     }
 
+//    private void updateDataForCategorySpinner(String accountId) {
+//
+//        Log.d("thinh",accountId);
+//        categories = categoryViewModel.getCategories();
+//        // Lấy danh sách các danh mục từ ViewModel
+//        ArrayList<Category> categoriesList = categories.getValue();
+//        if(categoriesList == null){
+//            Log.d("thinh2","NULLLLLL");
+//        }else{
+//            Log.d("thinh2","Ko null");
+//        }
+//        for (Category x :categoriesList) {
+//            Log.d("thinh2",x.getName());
+//        }
+//        // Khởi tạo Adapter cho CategorySpinner với danh sách danh mục vừa lấy
+//        SpinnerAdapter categoryAdapter = new CategoryListViewAdapter(this, categoriesList);
+//        // Thiết lập Adapter cho CategorySpinner
+//        categorySpinner.setAdapter(categoryAdapter);
+//    }
+
+
+    /*
+    private void updateDataForCategorySpinner(String accountId) {
+        categories.observe(this, new Observer<ArrayList<Category>>() {
+            @Override
+            public void onChanged(ArrayList<Category> categoriesList) {
+                initializeCategorySpinne(categoriesList);
+            }
+        });
+    }
+
+    private void initializeCategorySpinne(ArrayList<Category> categoriesList) {
+        SpinnerAdapter categoryAdapter = new CategoryListViewAdapter(this, categoriesList);
+        categorySpinner.setAdapter(categoryAdapter);
+    }
+    */
+
     /**
      * call API and fetch into Account Spinner
      * */
-    private void initializeAccountSpinner(ArrayList<Account> accounts)
+    private void initializeAccountSpinner(ArrayList<Account> accounts )
     {
         SpinnerAdapter adapter = new AccountAdapter(this, accounts);
         accountSpinner.setAdapter(adapter);
@@ -365,13 +405,22 @@ public class TransactionCreationActivity extends AppCompatActivity{
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 /*get account id which is selected from account spinner*/
                 accountId = String.valueOf(accounts.get(i).getId());
+                categoryViewModel.instanciate(headers,type);
+                //categories = categoryViewModel.getCategories();
+                ArrayList<Category> categoriesList = categories.getValue();
+               initializeCategorySpinner(categoriesList);
+
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
+
+
         });
+
     }
 
     /**
@@ -383,6 +432,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
     {
         SpinnerAdapter categoryAdapter = new CategoryListViewAdapter(this,categories);
         categorySpinner.setAdapter(categoryAdapter);
+
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

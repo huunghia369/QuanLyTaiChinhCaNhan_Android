@@ -64,6 +64,9 @@ public class TransactionUpdateActivity extends AppCompatActivity {
     public static Integer getCategory_balance_result_income() {
         return category_balance_result_income;
     }
+    public static String getAccountId() {
+        return accountId;
+    }
     // ket thuc sua o day **
     private TransactionDetail transaction;
     private Account atm;
@@ -88,7 +91,7 @@ public class TransactionUpdateActivity extends AppCompatActivity {
     private int id;
     //    private String categoryId;
     private String categoryName;
-    private String accountId;
+    private static String accountId;
     private String accountName;
     private String name;
     private String amount;
