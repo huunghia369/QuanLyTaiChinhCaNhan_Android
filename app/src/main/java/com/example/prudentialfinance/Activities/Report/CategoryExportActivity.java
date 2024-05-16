@@ -5,6 +5,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,8 +16,10 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
+import com.example.prudentialfinance.Activities.Transaction.TransactionStatementActivity;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
+import com.example.prudentialfinance.Helpers.Notification_File;
 import com.example.prudentialfinance.Model.CategoryMonthly;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
@@ -309,8 +312,14 @@ public class CategoryExportActivity extends AppCompatActivity {
         }
 
         try {
-            String path = getApplicationContext().getFilesDir().getPath();
-            File file = new File(path, "thong-ke-thu-chi-the-loai-theo-thang.xls");
+//            String path = getApplicationContext().getFilesDir().getPath();
+//            File file = new File(path, "thong-ke-thu-chi-the-loai-theo-thang.xls");
+//            if(!file.exists()){
+//                file.createNewFile();
+//            }
+
+            String path = Environment.getExternalStorageDirectory().getPath() + "/Download/";
+            File file = new File(path, "thong-ke-the-loai-theo-thang.xls");
             if(!file.exists()){
                 file.createNewFile();
             }
@@ -328,7 +337,9 @@ public class CategoryExportActivity extends AppCompatActivity {
 
             FancyToast.makeText(this,getString(R.string.export_success), FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,R.drawable.ic_check,true).show();
 
-
+            // Hiển thị thông báo
+            Notification_File notificationFile = new Notification_File(CategoryExportActivity.this);
+            notificationFile.showNotification(file);
         } catch (Exception e) {
             alert.showAlert(getString(R.string.alertTitle), getString(R.string.alertDefault), R.drawable.ic_close);
         }

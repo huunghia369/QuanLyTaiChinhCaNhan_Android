@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -19,8 +20,10 @@ import com.anychart.enums.Anchor;
 import com.anychart.enums.HoverMode;
 import com.anychart.enums.Position;
 import com.anychart.enums.TooltipPositionMode;
+import com.example.prudentialfinance.Activities.Transaction.TransactionStatementActivity;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
+import com.example.prudentialfinance.Helpers.Notification_File;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.AccountMonthly;
 import com.example.prudentialfinance.Model.GlobalVariable;
@@ -241,11 +244,18 @@ public class AccountChartActivity extends AppCompatActivity {
 
 
         try {
-            String path = getApplicationContext().getFilesDir().getPath();
-            File file = new File(path, "thong-ke-giao-dich-theo-tai-khoan.xls");
+//            String path = getApplicationContext().getFilesDir().getPath();
+//            File file = new File(path, "thong-ke-giao-dich-theo-tai-khoan.xls");
+//            if(!file.exists()){
+//                file.createNewFile();
+//            }
+
+            String path = Environment.getExternalStorageDirectory().getPath() + "/Download/";
+            File file = new File(path, "thong-ke-giao-dich-theo-the.xls");
             if(!file.exists()){
                 file.createNewFile();
             }
+
 
             FileOutputStream output = new FileOutputStream(file);
             hssfWorkbook.write(output);
@@ -259,7 +269,9 @@ public class AccountChartActivity extends AppCompatActivity {
             hssfWorkbook.close();
 
             FancyToast.makeText(this,getString(R.string.export_success), FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,R.drawable.ic_check,true).show();
-
+            // Hiển thị thông báo
+            Notification_File notificationFile = new Notification_File(AccountChartActivity.this);
+            notificationFile.showNotification(file);
 
         } catch (Exception e) {
             alert.showAlert(getString(R.string.alertTitle), getString(R.string.alertDefault), R.drawable.ic_close);
