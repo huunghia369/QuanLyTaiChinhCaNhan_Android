@@ -30,7 +30,7 @@
     <string name="password_confirm">Nhập lại mật khẩu</string>
     <string name="create_new_account">Tạo một tài khoản</string>
     <string name="welcome_back">Chào mừng trở lại</string>
-    <string name="name_profile">Nguyễn Văn Chung</string>
+    <string name="name_profile">Nguyễn Văn A</string>
     <string name="total_remaining">Tổng số dư</string>
     <string name="total_remaining_value">0</string>
     <string name="dashboard">Dashboard</string>
@@ -252,8 +252,8 @@
     <string name="branch_prudential_bank">Chi nhánh: Prudential Bank</string>
     <string name="preview_account_owner">Chủ tài khoản:</string>
     <string name="preview_account_name">Tên tài khoản:</string>
-    <string name="nguyen_thanh_phong">Nguyễn Thành Phong</string>
-    <string name="email_value">phongkaster@gmail.com</string>
+    <string name="nguyen_thanh_phong">Nguyễn Xuân A</string>
+    <string name="email_value">saoke@gmail.com</string>
     <string name="account_statement">SAO KÊ TÀI KHOẢN</string>
     <string name="thank_you_for_using_prudential_bank_s_service">Trân trọng cảm ơn quý khách đã sử dụng dịch vụ của Prudential Bank</string>
     <string name="prudential_bank_together_for_the_future">PRUDENTIAL BANK - Chung niềm tin vững tương lại</string>

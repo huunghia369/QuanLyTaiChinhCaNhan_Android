@@ -10,6 +10,9 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.NOTIFICATION"/>
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
@@ -24,6 +27,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PrudentialFinance"
         android:usesCleartextTraffic="true">
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.prudentialfinance.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity
             android:name=".Activities.Budget.BudgetReportActivity"
             android:exported="false" />
