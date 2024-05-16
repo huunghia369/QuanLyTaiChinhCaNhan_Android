@@ -18,6 +18,7 @@ import com.example.prudentialfinance.Activities.Auth.LoginActivity;
 import com.example.prudentialfinance.Adapter.CategoryAdapter;
 import com.example.prudentialfinance.Fragment.Categories.CategoriesExpenseFragment;
 import com.example.prudentialfinance.Fragment.Categories.CategoriesIncomeFragment;
+import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.Category;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.User;
@@ -41,7 +42,7 @@ public class CategoriesActivity extends AppCompatActivity {
     private ImageButton backBtn, btnAdd;
     private View closeButton;
     private int viewType;
-
+    Account account;
     CategoriesIncomeFragment categoriesIncomeFragment;
     CategoriesExpenseFragment categoriesExpenseFragment;
 
@@ -49,6 +50,7 @@ public class CategoriesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
+        account = getIntent().getParcelableExtra("account");
         setControl();
         setEvent();
     }

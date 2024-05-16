@@ -84,9 +84,9 @@ public class AddCategoryViewModel extends ViewModel {
 
         Call<CategoryAdd> container;
         if(data.getType() == 1){
-            container = api.editIncomeCategory(headers, data.getId(), data.getName(), data.getDescription(), data.getColor(),transactionCreationActivity.getCategory_balance_result_income());
+            container = api.editIncomeCategory(headers, data.getId(), data.getName(), data.getDescription(), data.getColor(),transactionCreationActivity.getCategory_balance_result_income(),transactionCreationActivity.getAccountId());
         }else{
-            container = api.editExpenseCategory(headers, data.getId(), data.getName(), data.getDescription(), data.getColor(),transactionCreationActivity.getCategory_balance_result());
+            container = api.editExpenseCategory(headers, data.getId(), data.getName(), data.getDescription(), data.getColor(),transactionCreationActivity.getCategory_balance_result(),transactionCreationActivity.getAccountId());
         }
         container.enqueue(new Callback<CategoryAdd>() {
             @Override
@@ -120,10 +120,10 @@ public class AddCategoryViewModel extends ViewModel {
         Call<CategoryAdd> container;
         if(data.getType() == 1){
 //            container = api.editIncomeCategory(headers, data.getId(), data.getName(), data.getDescription(), data.getColor());
-            container = api.editIncomeCategory(headers,Integer.parseInt(transactionCreationActivity.getCategoryId()), data.getName(), data.getDescription(), data.getColor(),transactionCreationActivity.getCategory_balance_result_income() );
+            container = api.editIncomeCategory(headers,Integer.parseInt(transactionCreationActivity.getCategoryId()), data.getName(), data.getDescription(), data.getColor(),transactionCreationActivity.getCategory_balance_result_income(),transactionCreationActivity.getAccountId() );
         }else{
             System.out.println("93 OKOK");
-            container = api.editExpenseCategory(headers,Integer.parseInt(transactionCreationActivity.getCategoryId()), data.getName(), data.getDescription(), data.getColor(),transactionCreationActivity.getCategory_balance_result() );
+            container = api.editExpenseCategory(headers,Integer.parseInt(transactionCreationActivity.getCategoryId()), data.getName(), data.getDescription(), data.getColor(),transactionCreationActivity.getCategory_balance_result(),transactionCreationActivity.getAccountId() );
         }
         container.enqueue(new Callback<CategoryAdd>() {
             @Override
@@ -157,10 +157,10 @@ public class AddCategoryViewModel extends ViewModel {
         Call<CategoryAdd> container;
         if(data.getType() == 1){
 //            container = api.editIncomeCategory(headers, data.getId(), data.getName(), data.getDescription(), data.getColor());
-            container = api.editIncomeCategory(headers,Integer.parseInt(transactionUpdateActivity.getCategoryId()), data.getName(), data.getDescription(), data.getColor(),transactionUpdateActivity.getCategory_balance_result_income() );
+            container = api.editIncomeCategory(headers,Integer.parseInt(transactionUpdateActivity.getCategoryId()), data.getName(), data.getDescription(), data.getColor(),transactionUpdateActivity.getCategory_balance_result_income(),transactionUpdateActivity.getAccountId() );
         }else{
             System.out.println("127 OKOK");
-            container = api.editExpenseCategory(headers,Integer.parseInt(transactionUpdateActivity.getCategoryId()), data.getName(), data.getDescription(), data.getColor(),transactionUpdateActivity.getCategory_balance_result() );
+            container = api.editExpenseCategory(headers,Integer.parseInt(transactionUpdateActivity.getCategoryId()), data.getName(), data.getDescription(), data.getColor(),transactionUpdateActivity.getCategory_balance_result(),transactionUpdateActivity.getAccountId() );
         }
         container.enqueue(new Callback<CategoryAdd>() {
             @Override
@@ -193,11 +193,11 @@ public class AddCategoryViewModel extends ViewModel {
         Call<CategoryAdd> container;
         if(data.getType() == 1){
 //            container = api.editIncomeCategory(headers, data.getId(), data.getName(), data.getDescription(), data.getColor());
-            container = api.editIncomeCategory(headers,Integer.parseInt(transactionCreationActivity.getCategoryId()), data.getName(), data.getDescription(), data.getColor(),transactionCreationActivity.getCategory_balance_result_income() );
+            container = api.editIncomeCategory(headers,Integer.parseInt(transactionCreationActivity.getCategoryId()), data.getName(), data.getDescription(), data.getColor(),transactionCreationActivity.getCategory_balance_result_income(),transactionCreationActivity.getAccountId() );
             System.out.println("123 OKOKê ffffffffff");
         }else{
             System.out.println("123 OKOKê");
-            container = api.editExpenseCategory(headers,Integer.parseInt(transactionCreationActivity.getCategoryId()), data.getName(), data.getDescription(), data.getColor(),transactionCreationActivity.getCategory_balance_result() );
+            container = api.editExpenseCategory(headers,Integer.parseInt(transactionCreationActivity.getCategoryId()), data.getName(), data.getDescription(), data.getColor(),transactionCreationActivity.getCategory_balance_result(),transactionCreationActivity.getAccountId() );
         }
         container.enqueue(new Callback<CategoryAdd>() {
             @Override

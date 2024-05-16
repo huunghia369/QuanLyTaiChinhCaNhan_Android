@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
+import com.example.prudentialfinance.Activities.Transaction.TransactionCreationActivity;
 import com.example.prudentialfinance.Container.CategoryGetAll;
+import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.Category;
 
 import org.json.JSONObject;
@@ -20,7 +22,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+
 public class CategoryViewModel extends ViewModel {
+    Account account;
     private MutableLiveData<ArrayList<Category>> categories = new MutableLiveData<>();
 
     public MutableLiveData<ArrayList<Category>> getCategories() {
@@ -34,15 +38,17 @@ public class CategoryViewModel extends ViewModel {
      * */
     public void instanciate(Map<String, String> headers, String type)
     {
+        TransactionCreationActivity transactionCreationActivity = new TransactionCreationActivity();
         /*Step 1*/
         Retrofit service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
 
         /*Step 2*/
-        retrieveCategories(headers, api, type);
+        retrieveCategories(headers, api, type, transactionCreationActivity.getAccountId());
     }
 
-    private void retrieveCategories(Map<String, String> headers, HTTPRequest api, String type) {
+
+    private void retrieveCategories(Map<String, String> headers, HTTPRequest api, String type,String account_Id) {
         if( categories == null)
         {
             categories = new MutableLiveData<>();
@@ -61,8 +67,8 @@ public class CategoryViewModel extends ViewModel {
         options.put("order[dir]","desc");
 
         Call<CategoryGetAll> container = type.equals("1") ?
-                api.retrieveInflowCategories(headers, options) :
-                api.retrieveOutflowCategories(headers,options);
+                api.retrieveInflowCategories(headers, options,account_Id) :
+                api.retrieveOutflowCategories(headers,options,account_Id);
 
 
 
@@ -73,8 +79,10 @@ public class CategoryViewModel extends ViewModel {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         System.out.println( jObjError );
+                        System.out.println("82 o day");
                     } catch (Exception e) {
                         System.out.println( e.getMessage() );
+                        System.out.println("85 o day");
                     }
                 }
                 if(response.isSuccessful())
